@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stanislav Dalbokov | Project Portfolio</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Space+Grotesk:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        mono: ['Space Grotesk', 'monospace'],
+                    },
+                    colors: {
+                        brand: {
+                            dark: '#1a1625',
+                            surface: '#2d2640',
+                            accent: '#ff6b9d',
+                            secondary: '#22d3ee',
+                            tertiary: '#818cf8',
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1a1625;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #ff6b9d;
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #22d3ee;
+        }
+
+        .glass {
+            background: rgba(45, 38, 64, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 107, 157, 0.2);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(34, 211, 238, 0.3), 0 10px 10px -5px rgba(129, 140, 248, 0.2);
+            border-color: #22d3ee;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .group:hover i {
+            transform: scale(1.1);
+            transition: transform 0.3s ease;
+        }
+
+        a.group:focus .card-hover {
+            box-shadow: 0 0 0 3px rgba(255, 107, 157, 0.5);
+        }
+    </style>
+</head>
+
+<body class="bg-brand-dark text-slate-300 font-sans overflow-x-hidden selection:bg-brand-accent selection:text-white">
+
+    <!-- Canvas Background -->
+    <canvas id="hero-canvas" class="fixed top-0 left-0 w-full h-full -z-10 opacity-40"></canvas>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass border-b border-purple-700/50 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-white font-mono tracking-tighter">
+                SD<span class="text-brand-accent">.</span>
+            </a>
+            
+            <div class="hidden md:flex space-x-8">
+                <a href="#projects" class="hover:text-brand-accent transition-colors text-sm font-semibold uppercase tracking-widest">Projects</a>
+            </div>
+
+            <button id="mobile-menu-btn" class="md:hidden text-white focus:outline-none" aria-label="Toggle mobile menu">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </div>
+        
+        <div id="mobile-menu" class="hidden md:hidden bg-brand-surface border-b border-purple-700">
+            <a href="#projects" class="block px-6 pb-3 pt-4 hover:bg-purple-700/30 hover:text-brand-accent">Projects</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-32 pb-16 md:pt-36 md:pb-20 px-6 relative">
+        <div class="max-w-4xl mx-auto text-center relative z-10">
+            <p class="text-brand-accent font-mono mb-3 text-base animate-pulse-slow">Hello, I am</p>
+
+            <h1 class="text-4xl md:text-5xl font-bold text-white mb-4 tracking-tight">
+                Stanislav <span class="text-purple-300">Dalbokov</span>
+            </h1>
+
+            <h2 class="text-xl md:text-2xl text-purple-200 mb-6 font-light">
+                Creating <span id="typewriter" class="text-brand-secondary font-semibold"></span><span class="animate-pulse">|</span>
+            </h2>
+
+            <p class="max-w-2xl mx-auto text-base md:text-lg text-purple-200 mb-8 leading-relaxed">
+                Below are projects I've developed with assistance from AI coding tools. Each represents a functional solution to a real problem or creative challenge.
+            </p>
+
+            <div class="flex flex-col md:flex-row justify-center gap-4">
+                <a href="#projects" class="px-6 py-3 bg-brand-accent text-white rounded-sm font-bold uppercase tracking-wide hover:bg-pink-500 transition-all shadow-[0_0_20px_rgba(255,107,157,0.4)] text-sm md:text-base">
+                    View Projects
+                </a>
+
+                <a href="https://bg.linkedin.com/in/standalbokov" target="_blank" rel="noopener noreferrer" class="px-6 py-3 border border-brand-secondary text-brand-secondary rounded-sm font-bold uppercase tracking-wide hover:bg-brand-secondary/10 transition-all text-sm md:text-base">
+                    <i class="fab fa-linkedin-in mr-2"></i> LinkedIn
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-16 md:py-20 bg-brand-surface relative">
+        <div class="max-w-7xl mx-auto px-6">
+
+            <div class="mb-12 reveal">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">
+                    <span class="text-brand-accent">01.</span> Featured Projects
+                </h2>
+                <div class="h-1 w-20 bg-brand-secondary"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+
+                <!-- Project 1: StorageSas -->
+                <a href="https://dalbokov.github.io/StorageSaS" target="_blank" rel="noopener noreferrer" class="block h-full group outline-none" aria-label="View StorageSas project - opens in new tab">
+                    <div class="bg-brand-dark rounded-xl overflow-hidden border border-purple-700 card-hover reveal flex flex-col h-full" style="transition-delay:0ms;">
+                        <div class="h-48 bg-gradient-to-br from-purple-900 to-pink-900 flex items-center justify-center relative overflow-hidden">
+                            <div class="absolute inset-0 bg-brand-accent/10 group-hover:bg-brand-accent/20 transition-all"></div>
+                            <i class="fas fa-warehouse text-6xl text-brand-accent opacity-80" aria-hidden="true"></i>
+                        </div>
+
+                        <div class="p-6 md:p-8 flex-1 flex flex-col">
+                            <div class="flex justify-between items-center mb-3 md:mb-4">
+                                <h3 class="text-lg md:text-xl font-bold text-white">StorageSas</h3>
+                            </div>
+
+                            <p class="text-purple-200 mb-4 md:mb-6 text-sm flex-1">
+                                Self-storage workflow simulator
+                            </p>
+
+                            <div class="flex flex-wrap gap-2 mt-auto">
+                                <span class="text-xs font-mono text-brand-accent bg-brand-accent/10 px-2 py-1 rounded">Workflow</span>
+                                <span class="text-xs font-mono text-brand-accent bg-brand-accent/10 px-2 py-1 rounded">Simulator</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Project 2: Bitcoin Dashboard -->
+                <a href="https://bitcoindashboard.vercel.app/" target="_blank" rel="noopener noreferrer" class="block h-full group outline-none" aria-label="View Bitcoin Dashboard project - opens in new tab">
+                    <div class="bg-brand-dark rounded-xl overflow-hidden border border-purple-700 card-hover reveal flex flex-col h-full" style="transition-delay:100ms;">
+                        <div class="h-48 bg-gradient-to-br from-cyan-900 to-purple-900 flex items-center justify-center relative overflow-hidden">
+                            <div class="absolute inset-0 bg-brand-secondary/10 group-hover:bg-brand-secondary/20 transition-all"></div>
+                            <i class="fab fa-bitcoin text-6xl text-brand-secondary opacity-80" aria-hidden="true"></i>
+                        </div>
+
+                        <div class="p-6 md:p-8 flex-1 flex flex-col">
+                            <div class="flex justify-between items-center mb-3 md:mb-4">
+                                <h3 class="text-lg md:text-xl font-bold text-white">Bitcoin Dashboard</h3>
+                            </div>
+
+                            <p class="text-purple-200 mb-4 md:mb-6 text-sm flex-1">
+                                Real-time analytics platform featuring technical indicators, on-chain metrics, and market sentiment visualization.
+                            </p>
+
+                            <div class="flex flex-wrap gap-2 mt-auto">
+                                <span class="text-xs font-mono text-brand-secondary bg-brand-secondary/10 px-2 py-1 rounded">Analytics</span>
+                                <span class="text-xs font-mono text-brand-secondary bg-brand-secondary/10 px-2 py-1 rounded">Real-time</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Project 3: Sumdoku -->
+                <a href="https://dalbokov.github.io/Sumdoku/" target="_blank" rel="noopener noreferrer" class="block h-full group outline-none" aria-label="View Sumdoku project - opens in new tab">
+                    <div class="bg-brand-dark rounded-xl overflow-hidden border border-purple-700 card-hover reveal flex flex-col h-full" style="transition-delay:200ms;">
+                        <div class="h-48 bg-gradient-to-br from-indigo-900 to-purple-900 flex items-center justify-center relative overflow-hidden">
+                            <div class="absolute inset-0 bg-brand-tertiary/10 group-hover:bg-brand-tertiary/20 transition-all"></div>
+                            <i class="fas fa-puzzle-piece text-6xl text-brand-tertiary opacity-80" aria-hidden="true"></i>
+                        </div>
+
+                        <div class="p-6 md:p-8 flex-1 flex flex-col">
+                            <div class="flex justify-between items-center mb-3 md:mb-4">
+                                <h3 class="text-lg md:text-xl font-bold text-white">Sumdoku</h3>
+                            </div>
+
+                            <p class="text-purple-200 mb-4 md:mb-6 text-sm flex-1">
+                                Magic square puzzle game with intelligent hint systems powered by constraint solving algorithms.
+                            </p>
+
+                            <div class="flex flex-wrap gap-2 mt-auto">
+                                <span class="text-xs font-mono text-brand-tertiary bg-brand-tertiary/10 px-2 py-1 rounded">Game</span>
+                                <span class="text-xs font-mono text-brand-tertiary bg-brand-tertiary/10 px-2 py-1 rounded">Puzzle</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Project 4: MatchDex -->
+                <a href="https://matchdex.vercel.app/" target="_blank" rel="noopener noreferrer" class="block h-full group outline-none" aria-label="View MatchDex project - opens in new tab">
+                    <div class="bg-brand-dark rounded-xl overflow-hidden border border-purple-700 card-hover reveal flex flex-col h-full" style="transition-delay:300ms;">
+                        <div class="h-48 bg-gradient-to-br from-fuchsia-900 to-purple-900 flex items-center justify-center relative overflow-hidden">
+                            <div class="absolute inset-0 bg-brand-accent/10 group-hover:bg-brand-accent/20 transition-all"></div>
+                            <i class="fas fa-network-wired text-6xl text-brand-accent opacity-80" aria-hidden="true"></i>
+                        </div>
+
+                        <div class="p-6 md:p-8 flex-1 flex flex-col">
+                            <div class="flex justify-between items-center mb-3 md:mb-4">
+                                <h3 class="text-lg md:text-xl font-bold text-white">MatchDex</h3>
+                            </div>
+
+                            <p class="text-purple-200 mb-4 md:mb-6 text-sm flex-1">
+                                Decentralized cryptocurrency exchange featuring automated market making, liquidity pools, and trustless peer-to-peer trading.
+                            </p>
+
+                            <div class="flex flex-wrap gap-2 mt-auto">
+                                <span class="text-xs font-mono text-brand-accent bg-brand-accent/10 px-2 py-1 rounded">DeFi</span>
+                                <span class="text-xs font-mono text-brand-accent bg-brand-accent/10 px-2 py-1 rounded">Exchange</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 bg-brand-dark border-t border-purple-800 text-center">
+        <p class="text-purple-300 font-mono text-sm">
+            &copy; 2025 Stanislav Dalbokov. Showcasing AI-assisted project development.
+        </p>
+        <div class="mt-4 space-x-4">
+            <a href="https://bg.linkedin.com/in/standalbokov" target="_blank" rel="noopener noreferrer" class="text-purple-300 hover:text-brand-accent transition-colors" aria-label="LinkedIn profile">
+                <i class="fab fa-linkedin text-xl"></i>
+            </a>
+            <a href="#" class="text-purple-300 hover:text-brand-accent transition-colors" aria-label="GitHub profile">
+                <i class="fab fa-github text-xl"></i>
+            </a>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Mobile menu
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        btn.addEventListener('click', () => menu.classList.toggle('hidden'));
+
+        // Reveal on scroll
+        function reveal() {
+            document.querySelectorAll(".reveal").forEach(el => {
+                const top = el.getBoundingClientRect().top;
+                if (top < window.innerHeight - 150) el.classList.add("active");
+            });
+        }
+        window.addEventListener("scroll", reveal);
+        reveal();
+
+        // Typewriter
+        const textElement = document.getElementById('typewriter');
+        const phrases = ['Digital Solutions', 'Practical Tools', 'Innovative Projects'];
+        let phraseIndex = 0, charIndex = 0, isDeleting = false, typeSpeed = 100;
+
+        function type() {
+            const current = phrases[phraseIndex];
+
+            if (isDeleting) {
+                textElement.textContent = current.substring(0, charIndex--);
+                typeSpeed = 50;
+            } else {
+                // Show the character FIRST, then increment
+                textElement.textContent = current.substring(0, charIndex + 1);
+                charIndex++;
+                typeSpeed = 100;
+            }
+
+            // When we reach the last character, pause
+            if (!isDeleting && charIndex === current.length) {
+                isDeleting = true;
+                typeSpeed = 2000; // The full word will now be visible for 2 seconds
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                phraseIndex = (phraseIndex + 1) % phrases.length;
+                typeSpeed = 500;
+            }
+
+            setTimeout(type, typeSpeed);
+        }
+        document.addEventListener('DOMContentLoaded', type);
+
+        // Canvas particles
+        const canvas = document.getElementById('hero-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height, particles = [];
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.vx = (Math.random() - 0.5) * 0.5;
+                this.vy = (Math.random() - 0.5) * 0.5;
+                this.size = Math.random() * 2;
+
+                const colors = ['#ff6b9d', '#22d3ee', '#818cf8'];
+                this.color = colors[Math.floor(Math.random() * colors.length)];
+            }
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                if (this.x < 0 || this.x > width) this.vx *= -1;
+                if (this.y < 0 || this.y > height) this.vy *= -1;
+            }
+            draw() {
+                ctx.fillStyle = this.color + '80';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            const particleCount = window.innerWidth < 768 ? 25 : 50;
+            for (let i = 0; i < particleCount; i++) particles.push(new Particle());
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, width, height);
+
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < 150) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = `rgba(34, 211, 238, ${0.15 - dist/1500})`;
+                        ctx.lineWidth = 1;
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            particles.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(animateParticles);
+        }
+
+        window.addEventListener('resize', () => { resize(); initParticles(); });
+        resize();
+        initParticles();
+        animateParticles();
+    </script>
+
+</body>
+</html>
